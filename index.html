@@ -7,7 +7,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
         :root {
             --gold: #D4AF37;
@@ -16,22 +15,18 @@
             --off-white: #f3f3f3;
             --card-bg: rgba(18, 18, 18, 0.85);
         }
-
         html, body {
             height: 100%;
             margin: 0;
             overflow-y: auto;
             overflow-x: hidden;
         }
-
         body {
             font-family: 'Jost', sans-serif;
             color: var(--off-white);
             background-color: var(--dark-bg);
             position: relative;
         }
-
-        /* --- Animated Background & Glitters --- */
         #background-canvas {
             position: fixed;
             top: 0;
@@ -41,47 +36,18 @@
             z-index: 0;
             pointer-events: none;
         }
-        .glitter-container {
-            position: fixed;
-            left: 0;
-            width: 100%;
-            height: 100px;
-            pointer-events: none;
-            z-index: 20;
-            overflow: hidden;
-        }
-        #top-glitter { top: 0; }
-        #bottom-glitter { bottom: 0; transform: rotate(180deg); }
-        .glitter {
-            position: absolute;
-            width: 3px;
-            height: 3px;
-            background-color: var(--gold);
-            border-radius: 50%;
-            opacity: 0;
-            animation: fall linear infinite;
-            box-shadow: 0 0 5px var(--gold), 0 0 10px var(--gold);
-        }
-        @keyframes fall {
-            to {
-                transform: translateY(100px);
-                opacity: 1;
-            }
-        }
-
         #app-container {
             width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center; /* Changed to center the content vertically */
+            justify-content: center;
             min-height: 100vh;
             padding: 2rem 1rem;
             box-sizing: border-box;
             position: relative;
             z-index: 1;
         }
-
         .page-content { display: none; }
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
@@ -93,8 +59,6 @@
             width: 100%;
             animation: fadeInUp 0.6s ease-out forwards;
         }
-
-        /* --- Card Styling --- */
         .card {
             background-color: var(--card-bg);
             backdrop-filter: blur(15px);
@@ -105,8 +69,6 @@
             width: 100%;
             max-width: 800px;
         }
-        
-        /* --- Typography --- */
         .logo {
             font-family: 'Cinzel', serif;
             font-size: clamp(2.5rem, 6vw, 3.5rem);
@@ -117,7 +79,6 @@
             letter-spacing: 2px;
             text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
         }
-
         .page-title {
             font-family: 'Cinzel', serif;
             font-size: clamp(1.5rem, 4vw, 2rem);
@@ -126,8 +87,6 @@
             margin-bottom: 2rem;
             color: var(--off-white);
         }
-
-        /* --- Buttons & Inputs --- */
         .btn {
             display: inline-flex; align-items: center; justify-content: center;
             padding: 1rem 1.75rem;
@@ -136,8 +95,6 @@
             cursor: pointer; border: 1px solid var(--gold); text-align: center;
             text-transform: uppercase; letter-spacing: 1px;
             font-size: 1.1rem;
-            position: relative;
-            overflow: hidden;
         }
         .btn-primary { 
             background: linear-gradient(145deg, var(--gold), var(--gold-dark));
@@ -148,37 +105,13 @@
             transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
         }
-        /* Shiny Effect */
-        .btn::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transform: rotate(45deg);
-            transition: all 0.5s ease;
-            opacity: 0;
-        }
-        .btn:hover::after {
-             animation: shiny-effect 1.5s ease-in-out infinite;
-             opacity: 1;
-        }
-        @keyframes shiny-effect {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
         .btn-secondary {
             background: transparent;
             color: var(--gold);
         }
         .btn-secondary:hover {
             background: rgba(212, 175, 55, 0.15);
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
         }
-
         .custom-select {
             width: 100%;
             padding: 1rem;
@@ -193,12 +126,6 @@
             background-repeat: no-repeat;
             background-size: 1.5em 1.5em;
         }
-        .custom-select:focus {
-            outline: none;
-            border-color: var(--gold);
-            box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
-        }
-        
         .back-button { 
             position: absolute; top: 1.25rem; left: 1.25rem; 
             background: rgba(0,0,0,0.3); 
@@ -207,14 +134,8 @@
             font-weight: 700; font-size: 1.2rem; line-height: 1;
             width:40px; height:40px; border-radius:.75rem; 
             display:flex; align-items:center; justify-content:center; 
-            z-index: 10; transition: all 0.3s ease;
+            z-index: 10;
         }
-        .back-button:hover {
-             background: rgba(212, 175, 55, 0.2);
-             border-color: var(--gold);
-        }
-
-        /* --- Explanation Page Styling --- */
         .explanation-section {
             border-left: 3px solid var(--gold);
             padding-left: 1.5rem;
@@ -225,10 +146,6 @@
             color: var(--gold);
             font-size: 1.5rem;
             margin-bottom: 0.75rem;
-        }
-         .explanation-section ul {
-            list-style: none;
-            padding-left: 0;
         }
         .explanation-section ul li {
             position: relative;
@@ -243,15 +160,11 @@
             position: absolute;
             left: 0;
             color: var(--gold);
-            font-size: 1rem;
-            line-height: 1.5;
         }
         .price-item {
             color: var(--gold);
             font-weight: 600;
         }
-
-        /* --- Final Page & QR Code Styling --- */
         #customer-id-display {
             background: linear-gradient(145deg, var(--gold), var(--gold-dark));
             -webkit-background-clip: text;
@@ -259,65 +172,20 @@
             font-family: 'Cinzel', serif;
             font-size: 2rem;
             font-weight: 800;
-            text-align: center;
             margin-bottom: 1.5rem;
-            letter-spacing: 2px;
         }
         #qrcode-container {
             display: flex;
             justify-content: center;
-            align-items: center;
             margin-bottom: 1.5rem;
             background-color: var(--off-white);
             padding: 1rem;
             border-radius: 0.5rem;
             border: 2px solid var(--gold);
         }
-
-        /* --- AI Chatbot Styling --- */
-        #conversation-panel {
-            position: fixed; right: 2rem; bottom: 10rem; width: 380px; max-width: 92vw; height: 560px;
-            background: var(--card-bg); border:1px solid rgba(212, 175, 55, 0.3); border-radius:1.25rem;
-            box-shadow: 0 24px 48px -24px rgba(0,0,0,.5);
-            display: none; flex-direction:column; overflow:hidden; z-index: 100;
-            transition: width .3s ease, height .3s ease, top .3s ease, left .3s ease, right .3s ease, border-radius .3s ease;
-        }
-        .panel-header{ background: linear-gradient(90deg, #1a1a1a, #2a2a2a); padding: .9rem 1rem; font-weight:700; color: var(--gold); display:flex; align-items:center; justify-content:space-between; cursor: grab; border-bottom: 1px solid rgba(212, 175, 55, 0.2); }
-        .panel-header:active { cursor: grabbing; }
-        .close-panel-btn { background: none; border: none; font-size: 1.75rem; font-weight: bold; cursor: pointer; line-height: 1; color: var(--gold); opacity: 0.7; }
-        .close-panel-btn:hover { opacity: 1; }
-        .chat-messages{ flex:1; padding: 1rem; overflow-y:auto; display:flex; flex-direction:column; gap:.6rem; }
-        .chat-message { max-width: 84%; padding: 0.55rem 0.75rem; border-radius: 0.9rem; line-height: 1.4; font-size:.98rem; white-space: pre-wrap; }
-        .user-message { background-color: var(--gold); color: #0a0a0a; align-self: flex-end; border-bottom-right-radius: 0.3rem; }
-        .ai-message { background-color: #222; color: var(--off-white); align-self: flex-start; border-bottom-left-radius: 0.3rem; }
-        
-        #voice-controls {
-            position: fixed; left: 2rem; bottom: 2rem;
-            display: none; z-index: 50;
-        }
-        .control-group { display: flex; align-items: center; gap: 1rem; }
-        .control-button {
-            width: 80px; height: 80px; border-radius: 9999px;
-            color:#111; border:none; position: relative;
-            display:flex; align-items:center; justify-content:center; cursor:pointer;
-            transition: transform .12s ease, box-shadow .12s ease, background .2s ease;
-            transform-origin: center;
-            background: linear-gradient(145deg, var(--gold), var(--gold-dark));
-            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
-        }
-        .control-button:hover{ transform: scale(1.05); }
-        #big-mic.recording{ transform: scale(1.1); }
-        .ring { position:absolute; inset:-8px; border-radius:9999px; border:2px solid var(--gold); animation: ringPulse 1.6s ease-out infinite; }
-        @keyframes ringPulse { 0% { transform: scale(.9); opacity:.9; } 100% { transform: scale(1.15); opacity:0; } }
-
-        #voice-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 110; flex-direction: column; backdrop-filter: blur(5px); }
-        #voice-visualizer { width: 190px; height: 190px; border-radius: 50%; background-color: var(--gold); display: flex; align-items: center; justify-content: center; transition: transform 0.1s ease-out; box-shadow:0 20px 60px rgba(0,0,0,.3); }
-        #stop-recording-btn { margin-top: 1.2rem; background: var(--off-white); color: #111; border: none; width: 110px; height: 48px; border-radius: 9999px; font-size: .95rem; font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 1px;}
     </style>
 </head>
 <body>
-    <div id="top-glitter" class="glitter-container"></div>
-    <div id="bottom-glitter" class="glitter-container"></div>
     <canvas id="background-canvas"></canvas>
 
     <div id="app-container">
@@ -328,19 +196,14 @@
                 <h2 class="page-title">スタッフ価格設定</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                     <div>
-                        <label for="price-select" class="block mb-2 font-semibold">料金（40分・税込）</label>
+                        <label for="price-select" class="block mb-2 font-semibold">料金プラン（40分・税込）</label>
                         <select id="price-select" class="custom-select"></select>
                         <input type="number" id="custom-price-input" class="custom-select mt-2 hidden" placeholder="カスタム金額を入力" min="0" step="1000">
                     </div>
                     <div>
                         <label for="source-select" class="block mb-2 font-semibold">お客様の来店経路</label>
                         <select id="source-select" class="custom-select">
-                            <option>フロントクーポン</option>
-                            <option>フリー</option>
-                            <option>web</option>
-                            <option>Google</option>
-                            <option>外販</option>
-                            <option>スレッズ</option>
+                            <option>フロントクーポン</option><option>フリー</option><option>web</option><option>Google</option><option>外販</option><option>スレッズ</option>
                         </select>
                     </div>
                 </div>
@@ -355,10 +218,10 @@
             <div class="card">
                 <button onclick="goBack()" class="back-button">‹</button>
                 <h1 class="logo">LUXE</h1>
-                <h2 class="page-title" data-translate-key="select_language_title">Select Your Language</h2>
+                <h2 class="page-title" data-translate-key="select_language_title"></h2>
                 <div class="flex flex-col space-y-4 max-w-md mx-auto">
                     <select id="language-select" class="custom-select"></select>
-                    <button id="language-continue-btn" class="btn btn-primary text-lg" data-translate-key="continue_btn">Continue</button>
+                    <button id="language-continue-btn" class="btn btn-primary text-lg" data-translate-key="continue_btn"></button>
                 </div>
             </div>
         </div>
@@ -367,22 +230,18 @@
         <div id="page-pricing" class="page-content">
             <div class="card">
                 <button onclick="goBack()" class="back-button">‹</button>
-                <h1 class="logo" data-translate-key="pricing_title">Price Information</h1>
+                <h1 class="logo" data-translate-key="pricing_title"></h1>
                 <div class="explanation-section">
-                    <h3 data-translate-key="main_service_fee">Main Service Fee</h3>
-                    <ul>
-                        <li><span data-translate-key="service_duration">40-Minute Session</span> <span id="display-price" class="price-item">¥13,000</span></li>
-                    </ul>
+                    <h3 data-translate-key="main_service_fee"></h3>
+                    <ul><li><span data-translate-key="service_duration"></span> <span id="display-price" class="price-item"></span></li></ul>
                 </div>
                 <p class="text-center text-amber-300 italic my-6 text-lg" data-translate-key="extension_fee_note"></p>
                 <div class="explanation-section">
-                    <h3 data-translate-key="optional_fees_title">Optional Fees</h3>
-                    <ul data-translate-key="pricing_list">
-                        <!-- Content injected by JS -->
-                    </ul>
+                    <h3 data-translate-key="optional_fees_title"></h3>
+                    <ul data-translate-key="pricing_list"></ul>
                 </div>
                  <div class="text-center mt-8">
-                    <button onclick="showPage('page-instructions')" class="btn btn-primary text-lg" data-translate-key="continue_btn">Continue</button>
+                    <button onclick="showPage('page-instructions')" class="btn btn-primary text-lg" data-translate-key="continue_btn"></button>
                 </div>
             </div>
         </div>
@@ -391,17 +250,15 @@
         <div id="page-instructions" class="page-content">
             <div class="card">
                 <button onclick="goBack()" class="back-button">‹</button>
-                 <h1 class="logo" data-translate-key="instructions_title">How to Enjoy</h1>
-                 <p class="text-center text-xl mb-6 -mt-2" data-translate-key="instructions_subtitle">To make your time unforgettable...</p>
+                 <h1 class="logo" data-translate-key="instructions_title"></h1>
+                 <p class="text-center text-xl mb-6 -mt-2" data-translate-key="instructions_subtitle"></p>
                  <div class="explanation-section">
-                    <h3 data-translate-key="included_services">Included Services</h3>
-                    <ul data-translate-key="instructions_list">
-                       <!-- Content injected by JS -->
-                    </ul>
+                    <h3 data-translate-key="included_services"></h3>
+                    <ul id="instructions-list-container"></ul>
                 </div>
                 <p class="text-center text-amber-300 italic mt-6 text-lg" data-translate-key="drink_incentive_text"></p>
                 <div class="text-center mt-8">
-                    <button onclick="showPage('page-rules')" class="btn btn-primary text-lg" data-translate-key="continue_to_rules_btn">View Rules</button>
+                    <button onclick="showPage('page-rules')" class="btn btn-primary text-lg" data-translate-key="continue_to_rules_btn"></button>
                 </div>
             </div>
         </div>
@@ -411,13 +268,11 @@
             <div class="card text-center">
                 <button onclick="goBack()" class="back-button">‹</button>
                 <svg class="mx-auto h-16 w-16 text-yellow-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" /></svg>
-                <h3 class="text-2xl font-bold mt-4" data-translate-key="rules_warning_title">【Important】House Rules</h3>
-                <p class="mt-2" data-translate-key="rules_warning_text">To ensure a safe and fun time for everyone, please observe the following:</p>
-                <div class="mt-4 text-left space-y-3 text-lg" data-translate-key="rules_warning_list">
-                     <!-- Content injected by JS -->
-                </div>
+                <h3 class="text-2xl font-bold mt-4" data-translate-key="rules_warning_title"></h3>
+                <p class="mt-2" data-translate-key="rules_warning_text"></p>
+                <div id="rules-list-container" class="mt-4 text-left space-y-3 text-lg"></div>
                 <div class="text-center mt-8">
-                    <button onclick="showPage('page-final')" class="btn btn-primary text-lg" data-translate-key="agree_btn">I Understand & Agree</button>
+                    <button onclick="showPage('page-final')" class="btn btn-primary text-lg" data-translate-key="agree_btn"></button>
                 </div>
             </div>
         </div>
@@ -425,160 +280,149 @@
         <!-- Final Page -->
         <div id="page-final" class="page-content">
              <div class="card text-center">
-                 <h1 class="logo" data-translate-key="customer_id_title">Your Customer ID</h1>
-                 <p class="mb-4" data-translate-key="customer_id_instructions">Please save this QR code. Show it on your next visit for special offers!</p>
+                 <h1 class="logo" data-translate-key="customer_id_title"></h1>
+                 <p class="mb-4" data-translate-key="customer_id_instructions"></p>
                  <div id="qrcode-container"></div>
                  <h2 id="customer-id-display"></h2>
                  <div class="flex flex-col sm:flex-row justify-center gap-4 mt-6">
-                    <button id="download-qr-btn" class="btn btn-primary" data-translate-key="download_qr_btn"></button>
-                    <button onclick="restartFlow()" class="btn btn-secondary" data-translate-key="back_to_start_btn"></button>
+                    <button onclick="nextCustomer()" class="btn btn-primary" data-translate-key="next_customer_btn"></button>
+                    <button onclick="restartFlow()" class="btn btn-secondary" data-translate-key="finish_session_btn"></button>
                  </div>
              </div>
         </div>
     </div>
 
-    <!-- AI Chatbot UI -->
-    <div id="conversation-panel" class="panel"><div class="panel-header" data-translate-key="chat_header">AI Assistant</div><button class="close-panel-btn" title="Close panel">&times;</button></div><div id="ai-chat-messages" class="chat-messages"></div></div>
-    
-    <div id="voice-controls">
-        <div class="control-group">
-            <button id="big-mic" title="Tap to speak with AI assistant" class="control-button"><div class="ring"></div><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line></svg></button>
-        </div>
-    </div>
-    
-    <div id="voice-overlay">
-        <div id="voice-visualizer">
-            <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line></svg>
-        </div>
-        <button id="stop-recording-btn" data-translate-key="stop_btn">Stop</button>
-    </div>
-
-
     <script>
         // --- CONFIG & STATE ---
-        const n8nWebhookUrl = 'https://your-n8n-webhook-url.com/webhook/placeholder'; // Placeholder URL
         let currentLanguage = 'en';
         let pageHistory = [];
-        let selectedPrice = 13000;
+        let selectedPriceInfo = { value: 13000, isVip: false };
         let selectedSource = 'フロントクーポン';
-        
-        // Chatbot state
-        let chatHistory = [];
-        let mediaRecorder, audioChunks = [], isRecording = false;
-        let audioContext, analyser, dataArray, source, rafId;
 
-
+        // --- TRANSLATIONS ---
         const translations = {
             'en': {
                 select_language_title: "Select Your Language", continue_btn: "Continue",
-                // Pricing Page
                 pricing_title: "Price Information", main_service_fee: "Main Service Fee", service_duration: "40-Minute Session",
-                extension_fee_note: "Please note: Any discounts apply only to the first 40-minute session. All extensions are charged at the standard rate.",
+                extension_fee_note: "Discounts apply only to the first session. Extensions are charged at the standard rate.",
                 optional_fees_title: "Optional Fees",
-                fee_extension_std: "40-Min Extension",
-                fee_extension_vip: "40-Min VIP Extension",
-                fee_drink: "Girl's Drink",
-                fee_shot: "Shot for Girl",
-                fee_nomination: "Nomination Fee (keep one girl)",
-                fee_change: "Girl Change Fee",
-                fee_bottle: "Bottle Fee",
-                // Instructions Page
+                fee_extension_std: "40-Min Extension", fee_extension_vip: "40-Min VIP Extension",
+                fee_drink: "Girl's Drink", fee_shot: "Shot for Girl", fee_nomination: "Nomination Fee", fee_change: "Girl Change Fee", fee_bottle: "Bottle Fee",
                 instructions_title: "How to Enjoy", instructions_subtitle: "To make your time unforgettable...",
                 included_services: "Included Services",
-                instructions_list: `<li>You will have 40 minutes with a rotation of 2-3 girls.</li>
-                                    <li>You can freely touch, kiss, and lick their upper body.</li>
-                                    <li>Enjoy unlimited beer, shochu, whiskey, and soft drinks.</li>
-                                    <li>Our staff will notify you when your time is nearly up.</li>`,
-                drink_incentive_text: "You are not required to buy drinks for the girls, but they will be very happy and more willing to please you if you do!",
+                instructions_list_std: `<li>40 mins with a rotation of 2-3 girls.</li><li>Freely touch, kiss, and lick their upper body.</li><li>Unlimited beer, shochu, whiskey, & soft drinks.</li><li>Staff will notify you when time is nearly up.</li>`,
+                instructions_list_vip: `<li>Enjoy your time in a private VIP room.</li><li>Freely touch, kiss, and lick their entire body.</li><li>Unlimited beer, shochu, whiskey, & soft drinks.</li><li>Staff will notify you when time is nearly up.</li>`,
+                drink_incentive_text: "Buying drinks for the girls is optional, but they will be very happy and more eager to please you if you do!",
                 continue_to_rules_btn: "View Rules",
-                // Rules Page
                 rules_warning_title: "【Important】House Rules",
-                rules_warning_text: "To ensure a safe and fun time for everyone, please observe the following:",
-                rules_warning_list: `<ul class="list-disc list-inside space-y-2">
-                                        <li>Do not harm the girls in any way.</li>
-                                        <li>Touching of their lower body is strictly prohibited.</li>
-                                        <li>Failure to follow these rules will result in immediate removal from the premises.</li>
-                                     </ul>`,
+                rules_warning_text: "For a safe and fun time for everyone, please observe the following:",
+                rules_list_std: `<li>Do not harm the girls.</li><li>Touching their lower body is prohibited.</li><li>Failure to follow rules will result in immediate removal.</li>`,
+                rules_list_vip: `<li>Do not harm the girls.</li><li>Please be gentle and respectful at all times.</li><li>Failure to follow rules will result in immediate removal.</li>`,
                 agree_btn: "I Understand & Agree", 
-                // Final Page
                 customer_id_title: "Your Customer ID",
-                customer_id_instructions: "Please save this QR code. Show it on your next visit for special offers!",
-                download_qr_btn: "Download QR Code",
-                back_to_start_btn: "Back to Start",
-                // Chatbot
-                chat_header: "AI Assistant", stop_btn: "Stop", error_speak_again: "An error occurred. Please try again."
+                customer_id_instructions: "Please scan this QR code with your phone to get your digital membership card.",
+                next_customer_btn: "Next Customer in Group",
+                finish_session_btn: "Finish & New Session",
             },
             'ja': {
                 select_language_title: "言語を選択してください", continue_btn: "続ける",
-                // Pricing Page
                 pricing_title: "料金のご案内", main_service_fee: "基本料金", service_duration: "40分コース",
-                extension_fee_note: "注意：割引は最初の40分セットにのみ適用されます。延長はすべて通常料金となります。",
+                extension_fee_note: "割引は最初のセットのみ適用されます。延長は通常料金となります。",
                 optional_fees_title: "オプション料金",
-                fee_extension_std: "40分延長",
-                fee_extension_vip: "40分VIP延長",
-                fee_drink: "女の子のドリンク",
-                fee_shot: "女の子へのショット",
-                fee_nomination: "本指名料（1人の子をキープ）",
-                fee_change: "女の子のチェンジ料",
-                fee_bottle: "ボトルキープ",
-                // Instructions Page
+                fee_extension_std: "40分延長", fee_extension_vip: "40分VIP延長",
+                fee_drink: "女の子のドリンク", fee_shot: "女の子へのショット", fee_nomination: "本指名料", fee_change: "女の子のチェンジ料", fee_bottle: "ボトルキープ",
                 instructions_title: "楽しみ方", instructions_subtitle: "最高の時間をお過ごしいただくために...",
                 included_services: "含まれるサービス",
-                instructions_list: `<li>40分間で2～3人の女の子が交代します。</li>
-                                    <li>上半身へのタッチ、キス、舐める行為はご自由にどうぞ。</li>
-                                    <li>ビール、焼酎、ウイスキー、ソフトドリンクが飲み放題です。</li>
-                                    <li>終了時間が近づきましたらスタッフがお声がけします。</li>`,
-                drink_incentive_text: "女の子へのドリンクは任意ですが、買ってあげるととても喜んで、さらにサービスも頑張ってくれます！",
+                instructions_list_std: `<li>40分間で2～3人の女の子が交代します。</li><li>上半身へのタッチ、キス、舐める行為はご自由に。</li><li>ビール、焼酎、ウイスキー、ソフトドリンクが飲み放題。</li><li>終了時間が近づいたらスタッフがお声がけします。</li>`,
+                instructions_list_vip: `<li>VIP個室で特別な時間をお楽しみください。</li><li>女の子の全身へ自由に触れることができます。</li><li>ビール、焼酎、ウイスキー、ソフトドリンクが飲み放題。</li><li>終了時間が近づいたらスタッフがお声がけします。</li>`,
+                drink_incentive_text: "ドリンクは任意ですが、女の子に買ってあげると大変喜び、サービスもより一層頑張ります！",
                 continue_to_rules_btn: "ルールを確認",
-                 // Rules Page
                 rules_warning_title: "【重要】ハウスルール",
                 rules_warning_text: "皆様が安全に楽しむため、以下のルールをお守りください：",
-                rules_warning_list: `<ul class="list-disc list-inside space-y-2">
-                                        <li>女の子を傷つける行為は絶対にしないでください。</li>
-                                        <li>下半身への接触は固く禁じられています。</li>
-                                        <li>ルールを守れない場合は、即時退店となります。</li>
-                                     </ul>`,
+                rules_list_std: `<li>女の子を傷つける行為は禁止です。</li><li>下半身へのタッチは禁止です。</li><li>ルール違反は即時退店となります。</li>`,
+                rules_list_vip: `<li>女の子を傷つける行為は禁止です。</li><li>常に優しく、敬意を持って接してください。</li><li>ルール違反は即時退店となります。</li>`,
                 agree_btn: "理解し、同意します",
-                // Final Page
                 customer_id_title: "お客様ID",
-                customer_id_instructions: "このQRコードを保存してください。次回ご来店時にご提示いただくと、特典がございます！",
-                download_qr_btn: "QRコードをダウンロード",
-                back_to_start_btn: "最初に戻る",
-                // Chatbot
-                chat_header: "AIアシスタント", stop_btn: "停止", error_speak_again: "エラーが発生しました。もう一度お試しください。"
+                customer_id_instructions: "お使いの携帯電話でこのQRコードをスキャンし、デジタル会員証を取得してください。",
+                next_customer_btn: "次のお客様（グループ）",
+                finish_session_btn: "終了して新規受付",
             },
+            'zh': {
+                select_language_title: "请选择您的语言", continue_btn: "继续",
+                pricing_title: "价格资讯", main_service_fee: "基本费用", service_duration: "40分钟套餐",
+                extension_fee_note: "请注意：任何折扣仅适用于首次消费。所有延时均按标准费率收费。",
+                optional_fees_title: "可选费用",
+                fee_extension_std: "40分钟延时", fee_extension_vip: "40分钟VIP延时",
+                fee_drink: "女孩的饮料", fee_shot: "给女孩的烈酒", fee_nomination: "指定费", fee_change: "更换女孩费用", fee_bottle: "存瓶费",
+                instructions_title: "如何享乐", instructions_subtitle: "为了让您的时光难忘...",
+                included_services: "包含的服务",
+                instructions_list_std: `<li>40分钟内将有2-3位女孩轮换。</li><li>您可以自由触摸、亲吻和舔她们的上半身。</li><li>无限畅饮啤酒、烧酒、威士忌和软饮料。</li><li>时间快到时，我们的员工会通知您。</li>`,
+                instructions_list_vip: `<li>在私人VIP房间里享受您的时光。</li><li>您可以自由触摸、亲吻和舔她们的全身。</li><li>无限畅饮啤酒、烧酒、威士忌和软饮料。</li><li>时间快到时，我们的员工会通知您。</li>`,
+                drink_incentive_text: "您不是必须为女孩购买饮料，但如果您购买，她们会非常高兴并更愿意取悦您！",
+                continue_to_rules_btn: "查看规则",
+                rules_warning_title: "【重要】本店规则",
+                rules_warning_text: "为确保大家有一个安全愉快的时间，请遵守以下规定：",
+                rules_list_std: `<li>请勿以任何方式伤害女孩。</li><li>严禁触摸她们的下半身。</li><li>不遵守这些规则将导致立即被请离。</li>`,
+                rules_list_vip: `<li>请勿以任何方式伤害女孩。</li><li>请始终温柔并尊重对方。</li><li>不遵守这些规则将导致立即被请离。</li>`,
+                agree_btn: "我理解并同意",
+                customer_id_title: "您的客户ID",
+                customer_id_instructions: "请用手机扫描此二维码以获取您的电子会员卡。",
+                next_customer_btn: "下一位客人（团体）",
+                finish_session_btn: "完成并新开会话",
+            },
+            'ko': {
+                select_language_title: "언어를 선택하세요", continue_btn: "계속하기",
+                pricing_title: "가격 정보", main_service_fee: "기본 서비스 요금", service_duration: "40분 세션",
+                extension_fee_note: "참고: 할인은 첫 40분 세션에만 적용됩니다. 모든 연장은 표준 요금으로 청구됩니다.",
+                optional_fees_title: "선택 요금",
+                fee_extension_std: "40분 연장", fee_extension_vip: "40분 VIP 연장",
+                fee_drink: "아가씨 드링크", fee_shot: "아가씨 샷", fee_nomination: "지명료", fee_change: "아가씨 교체 비용", fee_bottle: "보틀 키핑",
+                instructions_title: "즐기는 방법", instructions_subtitle: "잊지 못할 시간을 만들기 위해...",
+                included_services: "포함된 서비스",
+                instructions_list_std: `<li>40분 동안 2-3명의 아가씨가 교대로 들어옵니다.</li><li>상반신 터치, 키스, 핥기는 자유롭게 가능합니다.</li><li>맥주, 소주, 위스키, 소프트 드링크 무제한 제공.</li><li>시간이 다 되면 직원이 알려드립니다.</li>`,
+                instructions_list_vip: `<li>개인 VIP 룸에서 시간을 즐기세요.</li><li>아가씨의 전신을 자유롭게 터치, 키스, 핥기 가능합니다.</li><li>맥주, 소주, 위스키, 소프트 드링크 무제한 제공.</li><li>시간이 다 되면 직원이 알려드립니다.</li>`,
+                drink_incentive_text: "아가씨에게 음료를 사줄 의무는 없지만, 사주시면 매우 기뻐하며 더 즐겁게 해드릴 것입니다!",
+                continue_to_rules_btn: "규칙 보기",
+                rules_warning_title: "【중요】업소 규칙",
+                rules_warning_text: "모두의 안전하고 즐거운 시간을 위해 다음을 준수해 주십시오:",
+                rules_list_std: `<li>아가씨에게 어떤 식으로든 해를 끼치지 마십시오.</li><li>하반신 터치는 엄격히 금지됩니다.</li><li>규칙을 따르지 않을 경우 즉시 퇴장 조치됩니다.</li>`,
+                rules_list_vip: `<li>아가씨에게 어떤 식으로든 해를 끼치지 마십시오.</li><li>항상 부드럽고 존중하는 태도를 보여주십시오.</li><li>규칙을 따르지 않을 경우 즉시 퇴장 조치됩니다.</li>`,
+                agree_btn: "이해하고 동의합니다",
+                customer_id_title: "고객 ID",
+                customer_id_instructions: "휴대폰으로 이 QR 코드를 스캔하여 디지털 멤버십 카드를 받으세요.",
+                next_customer_btn: "다음 고객 (그룹)",
+                finish_session_btn: "세션 종료 및 새로 시작",
+            }
         };
         const languageOptions = [
             { code: 'en', name: "English" }, { code: 'ja', name: "日本語" }, { code: 'zh', name: "中文 (简体)" }, { code: 'ko', name: "한국어" }
         ];
 
+        // --- CORE FUNCTIONS ---
         function updateText() {
             const langPack = translations[currentLanguage] || translations['en'];
             document.querySelectorAll('[data-translate-key]').forEach(el => {
                 const key = el.getAttribute('data-translate-key');
-                if (langPack[key] && key !== 'pricing_list') { // Exclude the list itself
-                    el.innerHTML = langPack[key];
-                }
+                if (langPack[key]) el.innerHTML = langPack[key];
             });
 
-            // --- Dynamically build the pricing list ---
-            const isVip = selectedPrice >= 20000;
-            const extensionPrice = isVip ? 27000 : 13000;
-            const extensionTextKey = isVip ? 'fee_extension_vip' : 'fee_extension_std';
+            // Dynamic Content
+            const extensionPrice = selectedPriceInfo.isVip ? 27000 : 13000;
+            const extensionTextKey = selectedPriceInfo.isVip ? 'fee_extension_vip' : 'fee_extension_std';
+            
+            document.querySelector('[data-translate-key="pricing_list"]').innerHTML = `
+                <li><span>${langPack[extensionTextKey]}</span><span class="price-item">¥${extensionPrice.toLocaleString()}</span></li>
+                <li><span>${langPack['fee_drink']}</span><span class="price-item">¥3,000</span></li><li><span>${langPack['fee_shot']}</span><span class="price-item">¥4,000</span></li>
+                <li><span>${langPack['fee_nomination']}</span><span class="price-item">¥4,000</span></li><li><span>${langPack['fee_change']}</span><span class="price-item">¥4,000</span></li>
+                <li><span>${langPack['fee_bottle']}</span><span class="price-item">ASK</span></li>`;
+            
+            document.getElementById('display-price').textContent = `¥${selectedPriceInfo.value.toLocaleString()}`;
+            
+            const instructionsKey = selectedPriceInfo.isVip ? 'instructions_list_vip' : 'instructions_list_std';
+            document.getElementById('instructions-list-container').innerHTML = langPack[instructionsKey];
 
-            const pricingListEl = document.querySelector('[data-translate-key="pricing_list"]');
-            if (pricingListEl) {
-                pricingListEl.innerHTML = `
-                    <li><span>${langPack[extensionTextKey]}</span><span class="price-item">¥${extensionPrice.toLocaleString()}</span></li>
-                    <li><span>${langPack['fee_drink']}</span><span class="price-item">¥3,000</span></li>
-                    <li><span>${langPack['fee_shot']}</span><span class="price-item">¥4,000</span></li>
-                    <li><span>${langPack['fee_nomination']}</span><span class="price-item">¥4,000</span></li>
-                    <li><span>${langPack['fee_change']}</span><span class="price-item">¥4,000</span></li>
-                    <li><span>${langPack['fee_bottle']}</span><span class="price-item">ASK</span></li>
-                `;
-            }
-
-            document.getElementById('display-price').textContent = `¥${selectedPrice.toLocaleString()}`;
+            const rulesKey = selectedPriceInfo.isVip ? 'rules_list_vip' : 'rules_list_std';
+            document.getElementById('rules-list-container').innerHTML = `<ul class="list-disc list-inside space-y-2">${langPack[rulesKey].split('<li>').slice(1).map(item => `<li>${item}`).join('')}</ul>`;
         }
         
         function showPage(pageId, isGoingBack = false) {
@@ -586,22 +430,13 @@
             if (currentPage && !isGoingBack) pageHistory.push(currentPage.id);
             document.querySelectorAll('.page-content').forEach(page => page.classList.remove('active'));
             
-            if (pageId === 'page-final') {
-                generateAndDisplayCustomerID();
-            }
+            if (pageId === 'page-final') generateAndDisplayCustomerID();
 
             const targetPage = document.getElementById(pageId);
             if (targetPage) {
                 targetPage.classList.add('active');
                 updateText();
                 window.scrollTo(0, 0);
-            }
-            
-            const voiceControls = document.getElementById('voice-controls');
-            if (pageId !== 'page-staff-config' && pageId !== 'page-language') {
-                voiceControls.style.display = 'flex';
-            } else {
-                voiceControls.style.display = 'none';
             }
         }
 
@@ -617,59 +452,53 @@
             showPage('page-staff-config');
         }
 
+        function nextCustomer() {
+            // Instantly regenerate the ID and QR code for the next person in the group.
+            generateAndDisplayCustomerID();
+            window.scrollTo(0, 0); // Scroll to the top to make it clear the page has refreshed
+        }
+
         function generateAndDisplayCustomerID() {
             const uniqueID = `LUXE-${Date.now()}-${Math.random().toString(36).substr(2, 5).toUpperCase()}`;
             document.getElementById('customer-id-display').textContent = uniqueID;
 
             const qrContainer = document.getElementById('qrcode-container');
-            qrContainer.innerHTML = ''; // Clear previous QR code
+            qrContainer.innerHTML = '';
             
+            const cardUrl = `${window.location.href.split('luxe_guide.html')[0]}membership_card.html?id=${encodeURIComponent(uniqueID)}`;
+
             new QRCode(qrContainer, {
-                text: uniqueID,
-                width: 200,
-                height: 200,
-                colorDark: "#0a0a0a",
-                colorLight: "#f3f3f3",
+                text: cardUrl,
+                width: 200, height: 200,
+                colorDark: "#0a0a0a", colorLight: "#f3f3f3",
                 correctLevel: QRCode.CorrectLevel.H
             });
         }
 
-
+        // --- INITIALIZATION ---
         function initStaffPage() {
             const priceSelect = document.getElementById('price-select');
             const customPriceInput = document.getElementById('custom-price-input');
-            const specificPrices = [0, 5000, 6000, 7000, 8000, 10000, 13000, 20000, 27000];
+            const prices = [
+                { text: '¥0', value: 0 }, { text: '¥5,000', value: 5000 }, { text: '¥6,000', value: 6000 },
+                { text: '¥7,000', value: 7000 }, { text: '¥8,000', value: 8000 }, { text: '¥10,000', value: 10000 },
+                { text: '¥13,000 (通常)', value: 13000, isVip: false, selected: true },
+                { text: '¥20,000 (VIP)', value: 20000, isVip: true }, { text: '¥27,000 (VIP)', value: 27000, isVip: true },
+                { text: 'カスタム金額を入力', value: 'custom' }
+            ];
             
-            priceSelect.innerHTML = ''; // Clear existing options
-
-            specificPrices.forEach(price => {
-                const option = document.createElement('option');
-                option.value = price;
-                option.textContent = `¥${price.toLocaleString()}`;
-                if (price === 13000) option.selected = true;
-                priceSelect.appendChild(option);
-            });
-
-            const customOption = document.createElement('option');
-            customOption.value = 'custom';
-            customOption.textContent = 'カスタム金額を入力';
-            priceSelect.appendChild(customOption);
+            priceSelect.innerHTML = prices.map(p => `<option value="${p.value}" ${p.selected ? 'selected' : ''}>${p.text}</option>`).join('');
 
             priceSelect.addEventListener('change', () => {
-                if (priceSelect.value === 'custom') {
-                    customPriceInput.classList.remove('hidden');
-                    customPriceInput.focus();
-                } else {
-                    customPriceInput.classList.add('hidden');
-                }
+                customPriceInput.classList.toggle('hidden', priceSelect.value !== 'custom');
             });
 
             document.getElementById('staff-confirm-btn').addEventListener('click', () => {
-                if (priceSelect.value === 'custom') {
-                    selectedPrice = parseInt(customPriceInput.value) || 0;
-                } else {
-                    selectedPrice = parseInt(priceSelect.value);
-                }
+                const selectedOption = prices.find(p => p.value == priceSelect.value) || {};
+                const value = priceSelect.value === 'custom' ? parseInt(customPriceInput.value) || 0 : parseInt(priceSelect.value);
+                const isVip = selectedOption.isVip || value >= 20000;
+
+                selectedPriceInfo = { value, isVip };
                 selectedSource = document.getElementById('source-select').value;
                 showPage('page-language');
             });
@@ -677,226 +506,39 @@
         
         function initLanguagePage() {
             const langSelect = document.getElementById('language-select');
-            langSelect.innerHTML = '';
-            languageOptions.forEach(lang => {
-                const option = document.createElement('option');
-                option.value = lang.code;
-                option.textContent = lang.name;
-                langSelect.appendChild(option);
-            });
-            langSelect.addEventListener('change', (e) => {
-                currentLanguage = e.target.value;
-                updateText();
-            });
+            langSelect.innerHTML = languageOptions.map(l => `<option value="${l.code}">${l.name}</option>`).join('');
+            langSelect.addEventListener('change', (e) => { currentLanguage = e.target.value; updateText(); });
             document.getElementById('language-continue-btn').addEventListener('click', () => {
                 currentLanguage = langSelect.value;
                 showPage('page-pricing');
             });
         }
-
-        // --- Animated Backgrounds ---
+        
         function initBackground() {
             const canvas = document.getElementById('background-canvas');
             const ctx = canvas.getContext('2d');
             let particles = [];
-
-            function resizeCanvas() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            }
-
+            const resizeCanvas = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
             class Particle {
-                constructor() {
-                    this.x = Math.random() * canvas.width;
-                    this.y = Math.random() * canvas.height;
-                    this.size = Math.random() * 1.5 + 0.5;
-                    this.speedX = Math.random() * 0.5 - 0.25;
-                    this.speedY = Math.random() * 0.5 - 0.25;
-                    this.opacity = Math.random() * 0.5 + 0.2;
-                }
-                update() {
-                    this.x += this.speedX;
-                    this.y += this.speedY;
-                    if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-                    if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
-                }
-                draw() {
-                    ctx.fillStyle = `rgba(212, 175, 55, ${this.opacity})`;
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    ctx.fill();
-                }
+                constructor() { this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height; this.size = Math.random() * 1.5 + 0.5; this.speedX = Math.random() * 0.5 - 0.25; this.speedY = Math.random() * 0.5 - 0.25; this.opacity = Math.random() * 0.5 + 0.2; }
+                update() { this.x += this.speedX; this.y += this.speedY; if (this.x < 0 || this.x > canvas.width) this.speedX *= -1; if (this.y < 0 || this.y > canvas.height) this.speedY *= -1; }
+                draw() { ctx.fillStyle = `rgba(212, 175, 55, ${this.opacity})`; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); }
             }
-
-            function createParticles() {
-                particles = [];
-                const particleCount = (canvas.width * canvas.height) / 15000;
-                for (let i = 0; i < particleCount; i++) {
-                    particles.push(new Particle());
-                }
-            }
-
-            function animate() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                for (let i = 0; i < particles.length; i++) {
-                    particles[i].update();
-                    particles[i].draw();
-                }
-                requestAnimationFrame(animate);
-            }
-            
-            window.addEventListener('resize', () => {
-                resizeCanvas();
-                createParticles();
-            });
-
-            resizeCanvas();
-            createParticles();
-            animate();
+            const createParticles = () => { particles = []; const count = (canvas.width * canvas.height) / 15000; for (let i = 0; i < count; i++) particles.push(new Particle()); };
+            const animate = () => { ctx.clearRect(0, 0, canvas.width, canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); };
+            window.addEventListener('resize', () => { resizeCanvas(); createParticles(); });
+            resizeCanvas(); createParticles(); animate();
         }
 
-        function initGlitter() {
-            const createGlitter = (container) => {
-                const glitter = document.createElement('div');
-                glitter.classList.add('glitter');
-                glitter.style.left = `${Math.random() * 100}%`;
-                const duration = Math.random() * 3 + 2; // 2-5 seconds
-                glitter.style.animationDuration = `${duration}s`;
-                glitter.style.animationDelay = `${Math.random() * 5}s`;
-                container.appendChild(glitter);
-                setTimeout(() => {
-                    glitter.remove();
-                }, duration * 1000);
-            };
-
-            setInterval(() => createGlitter(document.getElementById('top-glitter')), 200);
-            setInterval(() => createGlitter(document.getElementById('bottom-glitter')), 200);
-        }
-
-        // --- AI CHATBOT FUNCTIONS ---
-        const aiChatMessages = document.getElementById('ai-chat-messages');
-        const aiConversationPanel = document.getElementById('conversation-panel');
-        const bigMicBtn = document.getElementById('big-mic');
-        const voiceOverlay = document.getElementById('voice-overlay');
-        const stopRecordingBtn = document.getElementById('stop-recording-btn');
-
-        function makeDraggable(panel, header) {
-            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-            header.onmousedown = dragMouseDown;
-            function dragMouseDown(e) { e.preventDefault(); pos3 = e.clientX; pos4 = e.clientY; document.onmouseup = closeDragElement; document.onmousemove = elementDrag; }
-            function elementDrag(e) { e.preventDefault(); pos1 = pos3 - e.clientX; pos2 = pos4 - e.clientY; pos3 = e.clientX; pos4 = e.clientY; panel.style.bottom = 'auto'; panel.style.right = 'auto'; panel.style.top = (panel.offsetTop - pos2) + "px"; panel.style.left = (panel.offsetLeft - pos1) + "px"; }
-            function closeDragElement() { document.onmouseup = null; document.onmousemove = null; }
-        }
-
-        function closeAllPanels() { aiConversationPanel.style.display = 'none'; }
-        function addChatMessage(message, sender) { const msgDiv = document.createElement('div'); msgDiv.className = `chat-message ${sender}-message`; msgDiv.textContent = message; aiChatMessages.appendChild(msgDiv); aiChatMessages.scrollTop = aiChatMessages.scrollHeight; return msgDiv; }
-        
-        async function sendAudioToWebhook(audioBlob) {
-            addChatMessage("🎤...", 'user');
-            try {
-                // This is a placeholder for actual webhook logic
-                console.log("Sending audio blob...", audioBlob);
-                setTimeout(() => {
-                    const langPack = translations[currentLanguage] || translations['en'];
-                    addChatMessage(langPack['error_speak_again'], 'ai');
-                }, 1000);
-
-            } catch (error) {
-                console.error("Audio chat error:", error);
-                const langPack = translations[currentLanguage] || translations['en'];
-                addChatMessage(langPack['error_speak_again'], 'ai');
-            }
-        }
-
-        function visualize(stream) {
-            if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            audioContext.resume();
-            const visualizer = document.getElementById('voice-visualizer');
-            source = audioContext.createMediaStreamSource(stream);
-            analyser = audioContext.createAnalyser();
-            analyser.fftSize = 256;
-            const bufferLength = analyser.frequencyBinCount;
-            dataArray = new Uint8Array(bufferLength);
-            source.connect(analyser);
-            const draw = () => {
-                rafId = requestAnimationFrame(draw);
-                if (!analyser) return;
-                analyser.getByteFrequencyData(dataArray);
-                const avg = dataArray.reduce((a, b) => a + b, 0) / bufferLength;
-                visualizer.style.transform = `scale(${1 + (avg / 128)})`;
-            };
-            draw();
-        }
-
-        async function startRecording() {
-            if (isRecording) return;
-            aiConversationPanel.style.display = 'flex';
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                voiceOverlay.style.display = 'flex';
-                visualize(stream);
-                audioChunks = [];
-                mediaRecorder = new MediaRecorder(stream);
-                mediaRecorder.start();
-                isRecording = true;
-                bigMicBtn.classList.add('recording');
-                mediaRecorder.addEventListener("dataavailable", (event) => { if (event.data?.size) audioChunks.push(event.data); });
-                mediaRecorder.addEventListener("stop", () => {
-                    const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-                    sendAudioToWebhook(audioBlob);
-                    stream.getTracks().forEach(track => track.stop());
-                });
-            } catch (err) { alert("Microphone access is required."); }
-        }
-
-        function stopRecording() {
-            if (!isRecording) return;
-            if (mediaRecorder?.state === "recording") mediaRecorder.stop();
-            isRecording = false;
-            voiceOverlay.style.display = 'none';
-            bigMicBtn.classList.remove('recording');
-            if (rafId) cancelAnimationFrame(rafId);
-            rafId = null;
-            if (source) source.disconnect();
-            const visualizer = document.getElementById('voice-visualizer');
-            if(visualizer) visualizer.style.transform = 'scale(1)';
-        }
-        
-        async function toggleRecording() { isRecording ? stopRecording() : await startRecording(); }
-
-        // --- INITIALIZATION ---
-        function init() {
+        document.addEventListener('DOMContentLoaded', () => {
             pageHistory.push('page-staff-config');
             initStaffPage();
             initLanguagePage();
             initBackground();
-            initGlitter();
             updateText();
-
-            // Init Chatbot
-            makeDraggable(aiConversationPanel, aiConversationPanel.querySelector('.panel-header'));
-            aiConversationPanel.querySelector('.close-panel-btn').addEventListener('click', () => {
-                closeAllPanels();
-                if (isRecording) stopRecording();
-            });
-            bigMicBtn.addEventListener('click', toggleRecording);
-            stopRecordingBtn.addEventListener('click', stopRecording);
-
-            // Init Download Button
-            document.getElementById('download-qr-btn').addEventListener('click', () => {
-                const qrContainer = document.getElementById('qrcode-container');
-                const canvas = qrContainer.querySelector('canvas');
-                if (canvas) {
-                    const customerId = document.getElementById('customer-id-display').textContent;
-                    const link = document.createElement('a');
-                    link.download = `${customerId}.png`;
-                    link.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-                    link.click();
-                }
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', init);
+        });
     </script>
 </body>
 </html>
+
+
